@@ -12,6 +12,7 @@
 #define PLAYER_X 13
 #define PLAYER_SIZE 3
 
+#define NERRORS 2
 #define ERRORLIST {"error[1]: memory allocation failure", "Unknown error "};
 
 typedef struct {

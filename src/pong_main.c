@@ -15,9 +15,7 @@ int main(int argc, char *argv[]) {
     error_index = 1;
   }
 
-  if (error_index > 0) {
-    printError(error_index);
-  }
+  printError(error_index);
 
   freeArray(player1.body);
   freeArray(player2.body);
