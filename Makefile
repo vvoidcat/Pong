@@ -1,11 +1,12 @@
 OUTNAME = "pong"
-CC = gcc -Wall -Werror -Wextra -std=c11
+##CC = gcc -Wall -Werror -Wextra -std=c11
+CC = gcc
 
 
 all: cleanall build clean
 
-build:
-	$(CC) ... -o $(OUTNAME)
+build: src/pong_main.c src/pong.c
+	$(CC) src/pong_main.c src/pong.c -o $(OUTNAME)
 
 rebuild: cleanall build
 
