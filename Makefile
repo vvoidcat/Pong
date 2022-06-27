@@ -1,6 +1,6 @@
 OUTNAME = "pong"
 ##CC = gcc -Wall -Werror -Wextra -std=c11
-CC = gcc
+CC = gcc -g
 
 
 all: cleanall build clean
