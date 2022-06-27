@@ -22,11 +22,12 @@
 #define DIR_NONE 0
 
 #define EMPTY 0
-#define PLAYER 1
-#define DIV 2
+#define PLAYER1 1
+#define PLAYER2 2
 #define BALL 3
-#define BORDER_WS 4
-#define BORDER_AD 5
+#define DIV 4
+#define BORDER_WS 5
+#define BORDER_AD 6
 
 #define NERRORS 2
 #define ERRORLIST {"error[1]: memory allocation failure", "Unknown error "};
@@ -39,7 +40,7 @@ typedef struct {
 #define PLAYER1_STARTPOS \
   (vector2) { PLAYER_X, PLAYER1_Y }
 #define PLAYER2_STARTPOS \
-  (vector2) { PLAYER_X, PLAYER1_Y }
+  (vector2) { PLAYER_X, PLAYER2_Y }
 #define BALL_STARTPOS \
   (vector2) { DIV_X, DIV_Y }
 #define BALL_STARTDIR \

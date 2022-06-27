@@ -34,7 +34,7 @@ void updateBall(ball *ball, vector2 position, vector2 direction, int speed) {
 
 int *updatePlayerCollider(int *collider, int y) {
   int newcollider[3] = {y - 1, y, y + 1};
-  for (int i = 0; i < 3; i++) {
+  for (int i = 0; i < PLAYER_SIZE; i++) {
     collider[i] = newcollider[i];
   }
   return collider;
@@ -54,19 +54,21 @@ void drawField(int **field) {
 
   for (int i = 0; i < NHEIGHT; i++) {
     for (int j = 0; j < NWIDTH; j++) {
-      if (field[i][j] == PLAYER) {
-        putchar('|');
+      if (field[i][j] == PLAYER1) {
+        printf("|");
+      } else if (field[i][j] == PLAYER2) {
+        printf("|");
       } else if (field[i][j] == BALL) {
-        putchar('@');
+        printf("@");
       } else if (field[i][j] == DIV) {
-        putchar('|');
+        printf("|");
       } else if (field[i][j] == BORDER_AD || field[i][j] == BORDER_WS) {
-        putchar('#');
+        printf("#");
       } else if (field[i][j] == EMPTY) {
-        putchar(' ');
+        printf(" ");
       }
     }
-    putchar('\n');
+    printf("\n");
   }
 }
 
