@@ -43,8 +43,10 @@ int *updatePlayerCollider(int *collider, int y) {
 void updateField(int **field, player player1, player player2, ball ball) {
   for (int i = 0; i < NHEIGHT; i++) {
     for (int j = 0; j < NWIDTH; j++) {
-      if (i == 0 || i == NHEIGHT - 1) {
-        field[i][j] = BORDER_WS;
+      if (i == 0) {
+        field[i][j] = BORDER_W;
+      } else if (i == NHEIGHT - 1) {
+        field[i][j] = BORDER_S;
       } else if (j == 0 || j == NWIDTH - 1) {
         field[i][j] = BORDER_AD;
       } else if (isPlayer(j, i, player1) == 1) {
@@ -81,13 +83,17 @@ void drawField(int **field) {
     printf("\t");
     for (int j = 0; j < NWIDTH; j++) {
       if (field[i][j] == PLAYER1) {
-        printf(COLOR_MAGENTA "|" COLOR_RESET);
+        printf(COLOR_BLUE "║" COLOR_RESET);
       } else if (field[i][j] == PLAYER2) {
-        printf(COLOR_CYAN "|" COLOR_RESET);
+        printf(COLOR_BLUE "║" COLOR_RESET);
       } else if (field[i][j] == BALL) {
-        printf("@");
-      } else if (field[i][j] == BORDER_AD || field[i][j] == BORDER_WS) {
-        printf("#");
+        printf(COLOR_BLUE "@" COLOR_RESET);
+      } else if (field[i][j] == BORDER_W) {
+        printf(COLOR_MAGENTA "-" COLOR_RESET);
+      } else if (field[i][j] == BORDER_S) {
+        printf(COLOR_MAGENTA "-" COLOR_RESET);
+      } else if (field[i][j] == BORDER_AD) {
+        printf(COLOR_MAGENTA "¦" COLOR_RESET);
       } else if (field[i][j] == EMPTY) {
         printf(" ");
       }

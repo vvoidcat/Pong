@@ -23,7 +23,8 @@
 #define PLAYER1 1
 #define PLAYER2 2
 #define BALL 3
-#define BORDER_WS 5
+#define BORDER_W 4
+#define BORDER_S 5
 #define BORDER_AD 6
 
 #define COLOR_RED "\x1B[31m"
