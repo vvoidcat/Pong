@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/ioctl.h>
 #include <time.h>
 
 #define NWIDTH 80
@@ -10,29 +11,32 @@
 
 #define PLAYER1_X 10
 #define PLAYER2_X 70
-#define PLAYER_Y 13
+#define PLAYER_Y 12
 #define PLAYER_SIZE 3
 
-#define DIR_UP 1
-#define DIR_DOWN -1
-#define DIR_LEFT -1
-#define DIR_RIGHT 1
-#define DIR_NONE 0
+#define UP 1
+#define DOWN -1
+#define LEFT -1
+#define RIGHT 1
+#define NONE 0
 
 #define EMPTY 0
 #define PLAYER1 1
 #define PLAYER2 2
 #define BALL 3
-#define BORDER_W 4
-#define BORDER_S 5
-#define BORDER_AD 6
+#define BORDER_WS 4
+#define BORDER_A 5
+#define BORDER_D 6
 
 #define COLOR_BLUE "\x1B[34m"
-#define COLOR_CYAN "\x1B[36m"
+#define COLOR_YELLOW "\x1B[33m"
+#define COLOR_MAGENTA "\x1B[35m"
 #define COLOR_RESET "\x1B[0m"
 
-#define NERRORS 2
-#define ERRORLIST {"error[1]: memory allocation failure", "Unknown error "};
+#define NERRORS 3
+#define ERRORLIST                         \
+  {"error[1]: memory allocation failure", \
+   "gameoflife: error[2]: freopen() failure", "Unknown error "};
 
 typedef struct {
   int x;
@@ -46,13 +50,14 @@ typedef struct {
 #define BALL_STARTPOS \
   (vector2) { NWIDTH / 2, NHEIGHT / 2 }
 #define BALL_STARTDIR \
-  (vector2) { DIR_LEFT, DIR_NONE }
+  (vector2) { LEFT, NONE }
 
 typedef struct {
   vector2 position;
   int *collider;
   int index;
   int score;
+  int ai;
 } player;
 
 typedef struct {
@@ -61,17 +66,33 @@ typedef struct {
   int speed;
 } ball;
 
+typedef struct {
+  int game_start;
+  int round_end;
+} trigger;
+
+void initTriggers(trigger *trigger);
 int initPlayer(player *player, int index);
 int initBall(ball *ball);
 
+int checkUserInput(player *player1, player *player2);
+int getBytes();
+
+vector2 getVector2(int x, int y);
+
 void updateBall(ball *ball, vector2 position, vector2 direction, int speed);
+
 void updatePlayer(player *player, vector2 newposition, int newscore);
+void updatePlayerScore(player *player, int newscore);
+void updatePlayerPosition(player *player, vector2 newposition);
 int *updatePlayerCollider(int *collider, int y);
+
 void updateField(int **field, player player1, player player2, ball ball);
+int findPlayer(int x, int y, player player);
 
-int isPlayer(int x, int y, player player);
-
-void drawField(int **field);
+void draw(int **field, player player1, player player2, trigger *trigger);
+void drawInstructions();
+void drawField(int **field, player player1, player player2, trigger *trigger);
 void delay(int milliseconds);
 
 int **allocatePointerArray(int size_x, int size_y);
