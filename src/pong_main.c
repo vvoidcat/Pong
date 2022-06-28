@@ -20,14 +20,17 @@ int main(int argc, char *argv[]) {
   initValues(&position_player1, &position_player2, &position_ball,
              &direction_ball);
 
+  // check argv
+
   if (initPlayer(&player1, position_player1, PLAYER1) &&
       initPlayer(&player2, position_player2, PLAYER2) && field) {
     while (playmode) {
       // check for player input
-      updateBall(&ball, position_ball, direction_ball, 1);
+      // if playmode = 0 then quit
 
-      // if something has changed
+      updateBall(&ball, position_ball, direction_ball, 1);
       updateField(field, player1, player2, ball);
+
       drawField(field);
       delay(delaytime);
     }

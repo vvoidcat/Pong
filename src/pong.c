@@ -15,14 +15,10 @@ int initPlayer(player *player, vector2 position, int index) {
 
   if ((*player).collider) {
     (*player).index = index;
-    (*player).score = 0;
-    (*player).position = position;
-    (*player).collider =
-        updatePlayerCollider((*player).collider, (*player).position.y);
+    updatePlayer(player, position, 0);
   } else {
     error = 0;
   }
-
   return error;
 }
 
@@ -30,6 +26,13 @@ void updateBall(ball *ball, vector2 position, vector2 direction, int speed) {
   (*ball).position = position;
   (*ball).direction = direction;
   (*ball).speed = speed;
+}
+
+void updatePlayer(player *player, vector2 newposition, int newscore) {
+  (*player).score = newscore;
+  (*player).position = newposition;
+  (*player).collider =
+      updatePlayerCollider((*player).collider, (*player).position.y);
 }
 
 int *updatePlayerCollider(int *collider, int y) {
@@ -82,18 +85,16 @@ void drawField(int **field) {
   for (int i = 0; i < NHEIGHT; i++) {
     printf("\t");
     for (int j = 0; j < NWIDTH; j++) {
-      if (field[i][j] == PLAYER1) {
-        printf(COLOR_BLUE "║" COLOR_RESET);
-      } else if (field[i][j] == PLAYER2) {
-        printf(COLOR_BLUE "║" COLOR_RESET);
+      if (field[i][j] == PLAYER1 || field[i][j] == PLAYER2) {
+        printf("║");
       } else if (field[i][j] == BALL) {
-        printf(COLOR_BLUE "@" COLOR_RESET);
+        printf(COLOR_CYAN "@" COLOR_RESET);
       } else if (field[i][j] == BORDER_W) {
-        printf(COLOR_MAGENTA "-" COLOR_RESET);
+        printf(COLOR_BLUE "-" COLOR_RESET);
       } else if (field[i][j] == BORDER_S) {
-        printf(COLOR_MAGENTA "-" COLOR_RESET);
+        printf(COLOR_BLUE "-" COLOR_RESET);
       } else if (field[i][j] == BORDER_AD) {
-        printf(COLOR_MAGENTA "¦" COLOR_RESET);
+        printf(COLOR_BLUE "¦" COLOR_RESET);
       } else if (field[i][j] == EMPTY) {
         printf(" ");
       }
@@ -114,7 +115,6 @@ void delay(int milliseconds) {
 int **allocatePointerArray(int size_x, int size_y) {
   int **result = NULL;
   int error = 0;
-
   result = malloc(sizeof(int *) * size_y);
 
   if (result) {
@@ -132,7 +132,6 @@ int **allocatePointerArray(int size_x, int size_y) {
   if (error) {
     freePointerArray(result, NHEIGHT);
   }
-
   return (error) ? NULL : result;
 }
 

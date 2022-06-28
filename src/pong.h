@@ -27,9 +27,7 @@
 #define BORDER_S 5
 #define BORDER_AD 6
 
-#define COLOR_RED "\x1B[31m"
 #define COLOR_BLUE "\x1B[34m"
-#define COLOR_MAGENTA "\x1B[35m"
 #define COLOR_CYAN "\x1B[36m"
 #define COLOR_RESET "\x1B[0m"
 
@@ -68,6 +66,7 @@ void initValues(vector2 *position_player1, vector2 *position_player2,
 int initPlayer(player *player, vector2 position, int index);
 
 void updateBall(ball *ball, vector2 position, vector2 direction, int speed);
+void updatePlayer(player *player, vector2 newposition, int newscore);
 int *updatePlayerCollider(int *collider, int y);
 void updateField(int **field, player player1, player player2, ball ball);
 
