@@ -43,25 +43,49 @@ int *updatePlayerCollider(int *collider, int y) {
 void updateField(int **field, player player1, player player2, ball ball) {
   for (int i = 0; i < NHEIGHT; i++) {
     for (int j = 0; j < NWIDTH; j++) {
-      field[i][j] = 1;
-      //
+      if (i == 0 || i == NHEIGHT - 1) {
+        field[i][j] = BORDER_WS;
+      } else if (j == 0 || j == NWIDTH - 1) {
+        field[i][j] = BORDER_AD;
+      } else if (isPlayer(j, i, player1) == 1) {
+        field[i][j] = PLAYER1;
+      } else if (isPlayer(j, i, player2) == 2) {
+        field[i][j] = PLAYER2;
+      } else if (i == ball.position.y && j == ball.position.x) {
+        field[i][j] = BALL;
+      } else {
+        field[i][j] = EMPTY;
+      }
     }
   }
 }
 
+int isPlayer(int x, int y, player player) {
+  int result = 0;
+  if (x == player.position.x) {
+    for (int i = 0; i < PLAYER_SIZE; i++) {
+      if (player.collider[i] == y) {
+        result = player.index;
+        break;
+      }
+    }
+  }
+  return result;
+}
+
 void drawField(int **field) {
   printf("\e[H\e[2J\e[3J");
+  printf("\n\n");
 
   for (int i = 0; i < NHEIGHT; i++) {
+    printf("\t");
     for (int j = 0; j < NWIDTH; j++) {
       if (field[i][j] == PLAYER1) {
-        printf("|");
+        printf(COLOR_MAGENTA "|" COLOR_RESET);
       } else if (field[i][j] == PLAYER2) {
-        printf("|");
+        printf(COLOR_CYAN "|" COLOR_RESET);
       } else if (field[i][j] == BALL) {
         printf("@");
-      } else if (field[i][j] == DIV) {
-        printf("|");
       } else if (field[i][j] == BORDER_AD || field[i][j] == BORDER_WS) {
         printf("#");
       } else if (field[i][j] == EMPTY) {
@@ -69,6 +93,15 @@ void drawField(int **field) {
       }
     }
     printf("\n");
+  }
+  printf("\n");
+}
+
+void delay(int milliseconds) {
+  milliseconds = milliseconds * 1000;
+  clock_t start = clock();
+  while (clock() < start + milliseconds) {
+    ;
   }
 }
 

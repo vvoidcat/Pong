@@ -2,6 +2,7 @@
 
 int main(int argc, char *argv[]) {
   int playmode = 1;
+  int delaytime = 400;
   int error_index = 0;
 
   vector2 direction_ball;
@@ -19,8 +20,8 @@ int main(int argc, char *argv[]) {
   initValues(&position_player1, &position_player2, &position_ball,
              &direction_ball);
 
-  if (initPlayer(&player1, position_player1, 1) &&
-      initPlayer(&player2, position_player2, 2) && field) {
+  if (initPlayer(&player1, position_player1, PLAYER1) &&
+      initPlayer(&player2, position_player2, PLAYER2) && field) {
     while (playmode) {
       // check for player input
       updateBall(&ball, position_ball, direction_ball, 1);
@@ -28,12 +29,8 @@ int main(int argc, char *argv[]) {
       // if something has changed
       updateField(field, player1, player2, ball);
       drawField(field);
+      delay(delaytime);
     }
-
-    printf("mem ok\n");
-    printf("player1 = %d %d\n", player1.position.x, player1.position.y);
-    printf("player2 = %d %d\n", player2.position.x, player2.position.y);
-    printf("field = %p\n", field);
   } else {
     error_index = 1;
   }
