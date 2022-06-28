@@ -61,9 +61,8 @@ typedef struct {
   int speed;
 } ball;
 
-void initValues(vector2 *position_player1, vector2 *position_player2,
-                vector2 *position_ball, vector2 *direction_ball);
-int initPlayer(player *player, vector2 position, int index);
+int initPlayer(player *player, int index);
+int initBall(ball *ball);
 
 void updateBall(ball *ball, vector2 position, vector2 direction, int speed);
 void updatePlayer(player *player, vector2 newposition, int newscore);

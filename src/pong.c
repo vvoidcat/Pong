@@ -1,25 +1,36 @@
 #include "pong.h"
 
-void initValues(vector2 *position_player1, vector2 *position_player2,
-                vector2 *position_ball, vector2 *direction_ball) {
-  *position_player1 = PLAYER1_STARTPOS;
-  *position_player2 = PLAYER2_STARTPOS;
-  *position_ball = BALL_STARTPOS;
-  *direction_ball = BALL_STARTDIR;
-}
-
-int initPlayer(player *player, vector2 position, int index) {
+int initPlayer(player *player, int index) {
   int error = 1;
-
   (*player).collider = malloc(sizeof(int) * PLAYER_SIZE);
 
   if ((*player).collider) {
     (*player).index = index;
-    updatePlayer(player, position, 0);
+    if (index == 1) {
+      updatePlayer(player, PLAYER1_STARTPOS, 0);
+    } else if (index == 2) {
+      updatePlayer(player, PLAYER2_STARTPOS, 0);
+    }
   } else {
     error = 0;
   }
   return error;
+}
+
+int initBall(ball *ball) {
+  updateBall(ball, BALL_STARTPOS, BALL_STARTDIR, 1);
+  return 1;
+}
+
+int checkUserInput(player player1, player player2) {
+  int playmode = 1;
+  int key = 0;
+
+  if (key == 'q' || key == 'Q') {
+    playmode = 0;
+  }
+
+  return playmode;
 }
 
 void updateBall(ball *ball, vector2 position, vector2 direction, int speed) {
