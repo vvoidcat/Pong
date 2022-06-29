@@ -1,10 +1,34 @@
 #ifndef SRC_PONG_H_
 #define SRC_PONG_H_
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <sys/ioctl.h>
 #include <time.h>
+
+#include "helper.h"
+
+typedef struct {
+  int x;
+  int y;
+} vector2;
+
+typedef struct {
+  vector2 position;
+  int *collider;
+  int index;
+  int score;
+  int ai;
+} player;
+
+typedef struct {
+  vector2 position;
+  vector2 direction;
+  int speed;
+} ball;
+
+typedef struct {
+  int game_start;
+  int round_end;
+} trigger;
 
 #define NWIDTH 80
 #define NHEIGHT 25
@@ -33,16 +57,6 @@
 #define COLOR_MAGENTA "\x1B[35m"
 #define COLOR_RESET "\x1B[0m"
 
-#define NERRORS 3
-#define ERRORLIST                         \
-  {"error[1]: memory allocation failure", \
-   "gameoflife: error[2]: freopen() failure", "Unknown error "};
-
-typedef struct {
-  int x;
-  int y;
-} vector2;
-
 #define PLAYER1_STARTPOS \
   (vector2) { PLAYER1_X, PLAYER_Y }
 #define PLAYER2_STARTPOS \
@@ -51,25 +65,6 @@ typedef struct {
   (vector2) { NWIDTH / 2, NHEIGHT / 2 }
 #define BALL_STARTDIR \
   (vector2) { LEFT, NONE }
-
-typedef struct {
-  vector2 position;
-  int *collider;
-  int index;
-  int score;
-  int ai;
-} player;
-
-typedef struct {
-  vector2 position;
-  vector2 direction;
-  int speed;
-} ball;
-
-typedef struct {
-  int game_start;
-  int round_end;
-} trigger;
 
 void initTriggers(trigger *trigger);
 int initPlayer(player *player, int index);
@@ -94,11 +89,5 @@ void draw(int **field, player player1, player player2, trigger *trigger);
 void drawInstructions();
 void drawField(int **field, player player1, player player2, trigger *trigger);
 void delay(int milliseconds);
-
-int **allocatePointerArray(int size_x, int size_y);
-void freePointerArray(int **parray, int size);
-void freeArray(int *array);
-
-void printError(int index);
 
 #endif  // SRC_PONG_H_

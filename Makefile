@@ -5,8 +5,8 @@ CC = gcc -g
 
 all: cleanall build clean
 
-build: src/pong_main.c src/pong.c
-	$(CC) src/pong_main.c src/pong.c -o $(OUTNAME)
+build: src/pong_main.c src/pong.c src/helper.c
+	$(CC) src/pong_main.c src/pong.c src/helper.c -o $(OUTNAME)
 
 rebuild: cleanall build
 
