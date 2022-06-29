@@ -24,10 +24,10 @@ int **allocatePointerArray(int size_x, int size_y) {
 }
 
 void freePointerArray(int **parray, int size_y) {
-  for (int i = 0; i < size_y; i++) {
-    freeArray(parray[i]);
-  }
   if (parray) {
+    for (int i = 0; i < size_y; i++) {
+      freeArray(parray[i]);
+    }
     free(parray);
   }
 }
